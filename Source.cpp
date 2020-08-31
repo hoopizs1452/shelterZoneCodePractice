@@ -67,6 +67,8 @@ void LockSolver::run(string(*func)(string)) {
 		string testcase = iter_r->first;
 		string anshash = iter_r->second;
 		string result = userfunc(testcase);
+		//cout << "testcase: " << testcase << endl;
+		cout << "anshash: " << anshash << endl;
 		if (anshash != "" && getHash(result) != anshash) {
 			count++;
 			cout << "Failed to open lock #" + to_string(count) + ", your solution is probably wrong." << endl;
@@ -83,32 +85,37 @@ string LockSolver::getPassword(string userID) {
 
 // user code space
 string solve(string token) {
-	
-	int step1 = 0, step2 = 0, step3 = 0, sum = 0;
+	int step1 = 0, step2 = 0, sum = 0;
+	long long int step3 = 0;
 	int n = atoi(token.c_str());
 	int num[100000] = {};
-	for (int i = token.length(); n != 0; i--)
+	for (int i = token.length(); i > 0; i--)
 	{
 		num[i] = (n % 10);
 		step1 += (n % 10);
 		n /= 10;
 	}
+	cout << "--token: " << token << endl;
+	//cout << "step1: " << step1 << endl;
 	int first = num[1];
 	int reciprocal2 = num[token.length() - 1];
 	step2 = first + reciprocal2;
-	step3 = encrypt(n);
+	//cout << "step2: " << step2 << endl;
+	step3 = encrypt(atoi(token.c_str()));
+	//cout << "step3: " << step3 << endl;
 	sum = step1 + step2 + step3;
+	//cout << "Total: " << sum << endl;
 	if (sum > 674361)
 		sum -= 78763;
-	return to_string(sum);
+	else
+		return to_string(sum);
 }
 
 int main() {
 	// your code in main
-	for (int i = 1; i <= 10; i++)
-	{
-		LockSolver r;
-		r.run(&solve);
-	}
+	//LockSolver();
+	LockSolver r;
+	r.run(&solve);
+	cout << "getPassword: " << r.getPassword("20180627") << endl;
 	return 0;
 }
