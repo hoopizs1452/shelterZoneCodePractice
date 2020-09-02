@@ -48,11 +48,14 @@ long long int encrypt(long long int number) {
 
 class LockSolver {
 public:
-	void run(string(*)(string));
+	LockSolver();
+	void run(string(*func)(string));
 	string getPassword(string);
 private:
 	string(*userfunc)(string);
 };
+
+LockSolver::LockSolver() {}
 
 void LockSolver::run(string(*func)(string)) {
 	hidden
@@ -67,8 +70,9 @@ void LockSolver::run(string(*func)(string)) {
 		string testcase = iter_r->first;
 		string anshash = iter_r->second;
 		string result = userfunc(testcase);
-		cout << "testcase: " << testcase << endl;
+		/*cout << "testcase: " << testcase << endl;
 		cout << "anshash: " << anshash << endl;
+		cout << "result: " << result << endl;*/
 		if (anshash != "" && getHash(result) != anshash) {
 			count++;
 			cout << "Failed to open lock #" + to_string(count) + ", your solution is probably wrong." << endl;
@@ -86,11 +90,12 @@ string LockSolver::getPassword(string userID) {
 
 // user code space
 string solve(string token) {
-	int step1 = 0, step2 = 0, step3 = 0, sum = 0;
+	unsigned long long int step1 = 0, step2 = 0, step3 = 0, sum = 0;
 	unsigned long long int n;
 	stringstream(token) >> n;
-	int num[20] = {};
-	int count = token.length();
+	unsigned long long int *num;
+	unsigned long long int count = token.length();
+	num = new unsigned long long int[count];
 	while (n != 0)
 	{
 		num[count] = n % 10;
@@ -98,29 +103,30 @@ string solve(string token) {
 		count--;
 		n /= 10;
 	}
-	cout << "--token: " << token << endl;
+	/*cout << "--token: " << token << endl;
 	cout << "length: " << token.length() << endl;
 	for (int i = 1; i <= token.length(); i++)
 	{
 		cout << num[i];
 	}
 	cout << endl;
-	cout << "step1: " << step1 << endl;
-	int first = num[1];
-	int reciprocal2 = num[token.length() - 1];
+	cout << "step1: " << step1 << endl;*/
+	unsigned long long int first = num[1];
+	unsigned long long int reciprocal2 = num[token.length() - 1];
 	step2 = first + reciprocal2;
-	cout << first << ", " << reciprocal2 << endl;
-	cout << "step2: " << step2 << endl;
+	/*cout << first << ", " << reciprocal2 << endl;
+	cout << "step2: " << step2 << endl;*/
 	step3 = encrypt(n);
-	cout << "step3: " << step3 << endl;
+	//cout << "step3: " << step3 << endl;
 	sum = step1 + step2 + step3;
-	cout << "Total = step1 + step2 + step3: " << sum << endl;
-	cout << "to_string sum: " << to_string(sum) << endl;
-	string str = to_string(sum);
+	/*cout << "Total = step1 + step2 + step3: " << sum << endl;
+	cout << "to_string sum: " << to_string(sum) << endl;*/
+	
 	if (sum > 674361)
 		sum -= 78763;
-	else
-		return str;
+	string str = to_string(sum);
+	return str;
+	delete[]num;
 }
 
 int main() {
