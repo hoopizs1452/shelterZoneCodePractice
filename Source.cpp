@@ -90,43 +90,42 @@ string LockSolver::getPassword(string userID) {
 
 // user code space
 string solve(string token) {
-	unsigned long long int step1 = 0, step2 = 0, step3 = 0, sum = 0;
-	unsigned long long int n;
+	unsigned __int64 step1 = 0, step2 = 0, step3 = 0, sum = 0;
+	unsigned __int64 n;
 	stringstream(token) >> n;
-	unsigned long long int *num;
-	unsigned long long int count = token.length();
-	num = new unsigned long long int[count];
+	unsigned __int64 num[20] = {};
+	unsigned __int64 count = token.length();
 	while (n != 0)
 	{
-		num[count] = n % 10;
+		num[count] = (n % 10);
 		step1 += n % 10;
 		count--;
 		n /= 10;
 	}
-	/*cout << "--token: " << token << endl;
+	cout << "--token: " << token << endl;
 	cout << "length: " << token.length() << endl;
 	for (int i = 1; i <= token.length(); i++)
 	{
 		cout << num[i];
 	}
 	cout << endl;
-	cout << "step1: " << step1 << endl;*/
-	unsigned long long int first = num[1];
-	unsigned long long int reciprocal2 = num[token.length() - 1];
+	cout << "step1: " << step1 << endl;
+	unsigned __int64 first = num[1];
+	unsigned __int64 reciprocal2 = num[token.length() - 1];
 	step2 = first + reciprocal2;
-	/*cout << first << ", " << reciprocal2 << endl;
-	cout << "step2: " << step2 << endl;*/
+	cout << first << ", " << reciprocal2 << endl;
+	cout << "step2: " << step2 << endl;
 	step3 = encrypt(n);
-	//cout << "step3: " << step3 << endl;
+	cout << "step3: " << step3 << endl;
 	sum = step1 + step2 + step3;
-	/*cout << "Total = step1 + step2 + step3: " << sum << endl;
-	cout << "to_string sum: " << to_string(sum) << endl;*/
+	cout << "Total = step1 + step2 + step3: " << sum << endl;
+	cout << "to_string sum: " << to_string(sum) << endl;
 	
 	if (sum > 674361)
 		sum -= 78763;
 	string str = to_string(sum);
 	return str;
-	delete[]num;
+	//delete[]num;
 }
 
 int main() {
