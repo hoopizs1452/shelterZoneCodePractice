@@ -101,12 +101,13 @@ string solve(string token) {
 		step1 += n % 10;
 		count--;
 		n /= 10;
+		//cout << "count: " << count << endl;
 	}
 	cout << "--token: " << token << endl;
 	cout << "length: " << token.length() << endl;
-	for (int i = 1; i <= token.length(); i++)
+	for (int i = 0; i < token.length(); i++)
 	{
-		cout << num[i];
+		cout << num[i + 1];
 	}
 	cout << endl;
 	cout << "step1: " << step1 << endl;
